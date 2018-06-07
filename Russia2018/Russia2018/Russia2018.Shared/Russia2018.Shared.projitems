@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>6279c845-92f8-4333-ab99-3d213163593c</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Russia2018.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)BallFace.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GreenButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)IntroMenu.xaml.cs">
+      <DependentUpon>IntroMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Ball.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Discoid.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Game.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\GhostBall.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Goal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\GoalPost.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Group.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\IGoalObserver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Player.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\PlayerPosition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Shot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\TableBorder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Team.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\TeamPlayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Turn.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\TurnEvents.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\TurnResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Vector2D.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PlayerFace.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ScoreControl.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)IntroMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+</Project>
