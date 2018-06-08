@@ -161,7 +161,13 @@ namespace Russia2018
 
         void team_MouseLeave(object sender, PointerRoutedEventArgs e)
         {
-            string teamID = ((FrameworkElement)e.OriginalSource).Tag.ToString();
+            object tag = ((FrameworkElement)e.OriginalSource).Tag;
+            if (tag == null)
+            {
+                return;
+            }
+
+            string teamID = tag.ToString();
             txtSelectedTeam.Text = "";
             imgSelectedTeam.Source = null;
 
