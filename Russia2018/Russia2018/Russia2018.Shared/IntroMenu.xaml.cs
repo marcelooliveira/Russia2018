@@ -7,12 +7,14 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace Russia2018
@@ -153,7 +155,8 @@ namespace Russia2018
 
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("TeamID1", teamID);
-            ((UserControlContainer)Application.Current.RootVisual).SwitchToView(typeof(MainPage), parameters);
+            this.Frame.Navigate(typeof(MainPage), parameters);
+            //((UserControlContainer)Application.Current.RootVisual).SwitchToView(typeof(MainPage), parameters);
         }
 
         void team_MouseLeave(object sender, PointerRoutedEventArgs e)

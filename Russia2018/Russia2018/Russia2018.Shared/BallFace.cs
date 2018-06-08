@@ -4,6 +4,7 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Shapes;
 
 namespace Russia2018
@@ -84,14 +85,13 @@ namespace Russia2018
                 }
             };
 
-            ImageContentProperty = DependencyProperty.Register("ImageContent", typeof(object), typeof(BallFace), new PropertyMetadata(ImageContentPropertyChanged));
-            AngleProperty = DependencyProperty.Register("Angle", typeof(double), typeof(BallFace), new PropertyMetadata(AnglePropertyChanged));
+            //ImageContentProperty = DependencyProperty.Register("ImageContent", typeof(object), typeof(BallFace), new PropertyMetadata(ImageContentPropertyChanged));
+            //AngleProperty = DependencyProperty.Register("Angle", typeof(double), typeof(BallFace), new PropertyMetadata(AnglePropertyChanged));
 
             Grid playerGrid = new Grid();
             playerGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(13) });
             playerGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(13) });
             playerGrid.Children.Add(new Image() { Margin = new Thickness(0, 0, 0, 0), Source = new BitmapImage(new Uri(string.Format("../Images/{0}.png", teamName), UriKind.Relative)) });
-            //playerGrid.Children.Add(new TextBlock() { Text = number.ToString("00"), Foreground = new SolidColorBrush(numberColor), Margin = new Thickness(24, 8, 0, 0), FontSize = 11, FontFamily = new FontFamily("Calibri") });
 
             cPresenter = new ContentPresenter()
             {
@@ -123,15 +123,12 @@ namespace Russia2018
             rTransform = new RotateTransform() { Angle = 0, CenterX = 6.5, CenterY = 6.5 };
             tGroup2.Children.Add(rTransform);
 
-            //<ContentPresenter Grid.Row="0" Margin="0,4,0,0" x:Name="contentPresenter" Content="{TemplateBinding ImageContent}" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="1.00"/>
-
             cPresenter.RenderTransform = tGroup2;
         }
 
         void ImageContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             localImageContent = (Image)e.NewValue;
-            //cPresenter.Content = localImageContent;
         }
 
         void AnglePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

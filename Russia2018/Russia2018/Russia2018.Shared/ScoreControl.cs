@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.Foundation;
 using Windows.UI;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -79,7 +80,7 @@ namespace Russia2018
             };
             sbBalls.Children.Add(ballOpacityAnimation1);
             Storyboard.SetTarget(ballOpacityAnimation1, imgBall1);
-            Storyboard.SetTargetProperty(ballOpacityAnimation1, new PropertyPath("Opacity"));
+            Storyboard.SetTargetProperty(ballOpacityAnimation1, "Opacity");
 
             DoubleAnimation ballOpacityAnimation2 = new DoubleAnimation()
             {
@@ -92,7 +93,7 @@ namespace Russia2018
 
             sbBalls.Children.Add(ballOpacityAnimation2);
             Storyboard.SetTarget(ballOpacityAnimation2, imgBall2);
-            Storyboard.SetTargetProperty(ballOpacityAnimation2, new PropertyPath("Opacity"));
+            Storyboard.SetTargetProperty(ballOpacityAnimation2, "Opacity");
 
             DoubleAnimation ballAngle1 = new DoubleAnimation()
             {
@@ -104,7 +105,7 @@ namespace Russia2018
 
             sbBalls.Children.Add(ballAngle1);
             Storyboard.SetTarget(ballAngle1, rotateTransform1);
-            Storyboard.SetTargetProperty(ballAngle1, new PropertyPath("Angle"));
+            Storyboard.SetTargetProperty(ballAngle1, "Angle");
 
             DoubleAnimation ballAngle2 = new DoubleAnimation()
             {
@@ -116,7 +117,7 @@ namespace Russia2018
 
             sbBalls.Children.Add(ballAngle2);
             Storyboard.SetTarget(ballAngle2, rotateTransform2);
-            Storyboard.SetTargetProperty(ballAngle2, new PropertyPath("Angle"));
+            Storyboard.SetTargetProperty(ballAngle2, "Angle");
 
             sbBalls.Begin();
 
@@ -282,7 +283,7 @@ namespace Russia2018
             //this.Background = new SolidColorBrush(Colors.Red);
 
             sbScore1 = new Storyboard();
-            sbScore1.Completed += new EventHandler(sbScore1_Completed);
+            sbScore1.Completed += SbScore1_Completed;
             DoubleAnimation dAnimation1 = new DoubleAnimation()
             {
                 Duration = new Duration(new TimeSpan(0, 0, 0, 2)),
@@ -291,7 +292,7 @@ namespace Russia2018
             };
 
             sbScore2 = new Storyboard();
-            sbScore2.Completed += new EventHandler(sbScore2_Completed);
+            sbScore2.Completed += SbScore2_Completed;
             DoubleAnimation dAnimation2 = new DoubleAnimation()
             {
                 Duration = new Duration(new TimeSpan(0, 0, 0, 2)),
@@ -302,23 +303,21 @@ namespace Russia2018
 
             sbScore1.Children.Add(dAnimation1);
             Storyboard.SetTarget(dAnimation1, translateTransform1);
-            Storyboard.SetTargetProperty(dAnimation1, new PropertyPath("Y"));
+            Storyboard.SetTargetProperty(dAnimation1, "Y");
 
             sbScore2.Children.Add(dAnimation2);
             Storyboard.SetTarget(dAnimation2, translateTransform2);
-            Storyboard.SetTargetProperty(dAnimation2, new PropertyPath("Y"));
+            Storyboard.SetTargetProperty(dAnimation2, "Y");
         }
 
-        void sbScore1_Completed(object sender, EventArgs e)
-        {
-            txtTeam1Score.Text = team1Score.ToString();
-            //txtTeam1ScoreAux.Visibility = Visibility.Collapsed;
-        }
-
-        void sbScore2_Completed(object sender, EventArgs e)
+        private void SbScore2_Completed(object sender, object e)
         {
             txtTeam2Score.Text = team2Score.ToString();
-            //txtTeam2ScoreAux.Visibility = Visibility.Collapsed;
+        }
+
+        private void SbScore1_Completed(object sender, object e)
+        {
+            txtTeam1Score.Text = team1Score.ToString();
         }
 
         public string Team1Name

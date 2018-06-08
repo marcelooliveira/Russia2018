@@ -1,10 +1,13 @@
 ﻿using Russia2018.Model;
 using System;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Shapes;
 
 namespace Russia2018
@@ -36,8 +39,8 @@ namespace Russia2018
             this.Width = 40;
             this.Player = player;
 
-            this.MouseEnter += new MouseEventHandler(PlayerFace_MouseEnter);
-            this.MouseLeave += new MouseEventHandler(PlayerFace_MouseLeave);
+            this.PointerEntered += PlayerFace_MouseEnter;
+            this.PointerExited += PlayerFace_MouseLeave;
 
             //ToolTipService.SetToolTip(this, string.Format("{0} - Messi\r\n-3 goals", player.Id));
 
@@ -48,20 +51,10 @@ namespace Russia2018
             gsCollection.Add(new GradientStop() { Offset = 0.5, Color = Color.FromArgb(255, 0x20, 0x20, 0x20) });
             gsCollection.Add(new GradientStop() { Offset = 1.0, Color = Color.FromArgb(255, 0xFF, 0xFF, 0xFF) });
 
-            RadialGradientBrush rgb = new RadialGradientBrush(gsCollection);
-            rgb.Center = new Point(0.5, 0.5); //Center="0.5, 0.5" RadiusX="0.9" RadiusY="0.9"
-            rgb.RadiusX = 0.5;
-            rgb.RadiusY = 0.5;
-            //this.Background = rgb;
-
-            //<Ellipse Margin="11,7,11,23">
-            //<Ellipse.Fill>
-            //<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-            //<GradientStop Color="#ffffffff" Offset="0.00"/>
-            //<GradientStop x:Name="centralGradientStop" Color="#ff008D00" Offset="1.00"/>
-            //</LinearGradientBrush>
-            //</Ellipse.Fill>
-            //</Ellipse>
+            //RadialGradientBrush rgb = new RadialGradientBrush(gsCollection);
+            //rgb.Center = new Point(0.5, 0.5); //Center="0.5, 0.5" RadiusX="0.9" RadiusY="0.9"
+            //rgb.RadiusX = 0.5;
+            //rgb.RadiusY = 0.5;
 
             centerColor = Color.FromArgb(255, player.Team.R1, player.Team.G1, player.Team.B1);
             SolidColorBrush centerColorBrush = new SolidColorBrush(centerColor);
@@ -82,7 +75,7 @@ namespace Russia2018
 
             sb.Children.Add(colorAnimation);
             Storyboard.SetTarget(colorAnimation, centerColorBrush);
-            Storyboard.SetTargetProperty(colorAnimation, new PropertyPath("Color"));
+            Storyboard.SetTargetProperty(colorAnimation, "Color");
             this.Resources.Add("SelectedPlayerSB", sb);
 
 
@@ -117,19 +110,14 @@ namespace Russia2018
                 }
             };
 
-            ImageContentProperty = DependencyProperty.Register("ImageContent", typeof(object), typeof(PlayerFace), new PropertyMetadata(ImageContentPropertyChanged));
-            AngleProperty = DependencyProperty.Register("Angle", typeof(double), typeof(PlayerFace), new PropertyMetadata(AnglePropertyChanged));
+            //sImageContentProperty = DependencyProperty.Register("ImageContent", typeof(object), typeof(PlayerFace), new PropertyMetadata(ImageContentPropertyChanged));
+            //AngleProperty = DependencyProperty.Register("Angle", typeof(double), typeof(PlayerFace), new PropertyMetadata(AnglePropertyChanged));
 
             Grid playerGrid = new Grid();
-            //playerGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(18) });
-            //playerGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(24) });
             playerGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(32) });
             playerGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(36) });
             playerGrid.Children.Add(new Image() { Margin = new Thickness(-9, 0, 0, 0), Source = new BitmapImage(new Uri(string.Format("../Images/{0}.png", player.Team.TeamID), UriKind.Relative)), Stretch = Stretch.Uniform });
-            //playerGrid.Children[0].SetValue(Grid.ColumnProperty, 0);
-            //playerGrid.Children[0].SetValue(Grid.RowProperty, 0); 
             playerGrid.Children.Add(new TextBlock() { Text = player.Id, Foreground = new SolidColorBrush(player.Team.NumberColor), Margin = new Thickness(24, 8, 0, 0), FontSize = 11, FontFamily = new FontFamily("Calibri") });
-            //playerGrid.Children[1].SetValue(Grid.ColumnProperty, 1);
 
             cPresenter = new ContentPresenter()
             {
@@ -141,10 +129,6 @@ namespace Russia2018
                 Width = 36,
                 Height = 36
             };
-
-            //e1.Stroke = new SolidColorBrush(Colors.Red);
-            //e1.StrokeThickness = 4;
-            //e1.Fill = new SolidColorBrush(Colors.Yellow);
 
             Image imgPointer = new Image()
             {
@@ -179,14 +163,7 @@ namespace Russia2018
             this.Children.Add(eTop);
             this.Children.Add(eBottom);
             this.Children.Add(cPresenter);
-            //this.Children.Add(imgPointer);
             this.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x00, 0x00, 0x00));
-            //Grid.Row="0" Margin="0,4,0,0" 
-            //x:Name="contentPresenter" 
-            //Content="{TemplateBinding ImageContent}"
-            //HorizontalAlignment="Center" 
-            //VerticalAlignment="Center" 
-            //Opacity="1.00"
 
             TransformGroup tGroup = new TransformGroup();
             tGroup.Children = new TransformCollection();
@@ -201,8 +178,6 @@ namespace Russia2018
             rTransform = new RotateTransform() { Angle = 0, CenterX = 20.5, CenterY = 17 };
             tGroup2.Children.Add(rTransform);
 
-            //<ContentPresenter Grid.Row="0" Margin="0,4,0,0" x:Name="contentPresenter" Content="{TemplateBinding ImageContent}" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="1.00"/>
-
             cPresenter.RenderTransform = tGroup2;
 
             sbPointer = new Storyboard()
@@ -216,49 +191,42 @@ namespace Russia2018
                 To = 360
             };
             Storyboard.SetTarget(dAnimationPointer, rTransform);
-            Storyboard.SetTargetProperty(dAnimationPointer, new PropertyPath("Angle"));
+            Storyboard.SetTargetProperty(dAnimationPointer, "Angle");
             sbPointer.Children.Add(dAnimationPointer);
         }
 
-        void PlayerFace_MouseLeave(object sender, MouseEventArgs e)
+        void PlayerFace_MouseLeave(object sender, PointerRoutedEventArgs e)
         {
             GameHelper.Instance.CurrentMousePlayer = null;
             if (GameHelper.Instance.CurrentSelectedPlayer == null)
             {
-                //eTop.Visibility = Visibility.Visible;
-                //eBottom.Visibility = Visibility.Visible;
                 sb.Stop();
             }
             else
             {
                 if (GameHelper.Instance.CurrentSelectedPlayer != this.Player)
                 {
-                    //eTop.Visibility = Visibility.Visible;
-                    //eBottom.Visibility = Visibility.Visible;
                     sb.Stop();
                 }
             }
         }
 
-        void PlayerFace_MouseEnter(object sender, MouseEventArgs e)
+        void PlayerFace_MouseEnter(object sender, PointerRoutedEventArgs e)
         {
             GameHelper.Instance.CurrentMousePlayer = this.Player;
-            //eTop.Visibility = Visibility.Collapsed;
-            //eBottom.Visibility = Visibility.Collapsed;
             sb.Begin();
         }
 
-        void ImageContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            localImageContent = (Image)e.NewValue;
-            //cPresenter.Content = localImageContent;
-        }
+        //void ImageContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    localImageContent = (Image)e.NewValue;
+        //}
 
-        void AnglePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            localAngle = (double)e.NewValue;
-            rTransform.Angle = localAngle;
-        }
+        //void AnglePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    localAngle = (double)e.NewValue;
+        //    rTransform.Angle = localAngle;
+        //}
 
         public object ImageContent
         {
@@ -319,8 +287,6 @@ namespace Russia2018
 
         public void Select()
         {
-            //eTop.Visibility = Visibility.Collapsed;
-            //eBottom.Visibility = Visibility.Collapsed;
             sb.Begin();
             sbPointer.Begin();
         }

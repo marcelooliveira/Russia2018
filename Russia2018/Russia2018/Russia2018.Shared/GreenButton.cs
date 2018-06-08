@@ -90,12 +90,12 @@ namespace Russia2018
             }
         }
 
-        public override void OnApplyTemplate()
+        protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            this.PointerEntered += new GreenButton_MouseEnter;
-            this.PointerExited += new GreenButton_MouseLeave;
-            this.PointerMoved += new GreenButton_MouseMove;
+            this.PointerEntered += GreenButton_MouseEnter;
+            this.PointerExited += GreenButton_MouseLeave;
+            this.PointerMoved += GreenButton_MouseMove;
 
             this.HorizontalContentAlignment = HorizontalAlignment.Center;
             this.ChangeVisualState(false);
