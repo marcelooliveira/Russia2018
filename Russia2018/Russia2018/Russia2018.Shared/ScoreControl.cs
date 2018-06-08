@@ -51,7 +51,7 @@ namespace Russia2018
             TextBlock txtX = new TextBlock() { Text = "x" };
 
             imgBall1.Source =
-            imgBall2.Source = new BitmapImage(new Uri("../Images/Jabulani.png", UriKind.Relative));
+            imgBall2.Source = new BitmapImage(new Uri(this.BaseUri, "../Images/Jabulani.png"));
 
             imgBall1.SetValue(MarginProperty, new Thickness(0, 2, 0, 0));
             imgBall2.SetValue(MarginProperty, new Thickness(0, 2, 0, 0));

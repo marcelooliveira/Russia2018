@@ -155,7 +155,10 @@ namespace Russia2018
 
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("TeamID1", teamID);
-            this.Frame.Navigate(typeof(MainPage), parameters);
+            this.Frame.Navigate(typeof(MainPage), teamID);
+
+
+
             //((UserControlContainer)Application.Current.RootVisual).SwitchToView(typeof(MainPage), parameters);
         }
 
