@@ -51,7 +51,7 @@ namespace Russia2018
             gsCollection.Add(new GradientStop() { Offset = 0.5, Color = Color.FromArgb(255, 0x20, 0x20, 0x20) });
             gsCollection.Add(new GradientStop() { Offset = 1.0, Color = Color.FromArgb(255, 0xFF, 0xFF, 0xFF) });
 
-            //RadialGradientBrush rgb = new RadialGradientBrush(gsCollection);
+            LinearGradientBrush rgb = new LinearGradientBrush(gsCollection, 45);
             //rgb.Center = new Point(0.5, 0.5); //Center="0.5, 0.5" RadiusX="0.9" RadiusY="0.9"
             //rgb.RadiusX = 0.5;
             //rgb.RadiusY = 0.5;
@@ -110,8 +110,8 @@ namespace Russia2018
                 }
             };
 
-            //sImageContentProperty = DependencyProperty.Register("ImageContent", typeof(object), typeof(PlayerFace), new PropertyMetadata(ImageContentPropertyChanged));
-            //AngleProperty = DependencyProperty.Register("Angle", typeof(double), typeof(PlayerFace), new PropertyMetadata(AnglePropertyChanged));
+            ImageContentProperty = DependencyProperty.Register("ImageContent", typeof(object), typeof(PlayerFace), new PropertyMetadata(null, ImageContentPropertyChanged));
+            AngleProperty = DependencyProperty.Register("Angle", typeof(double), typeof(PlayerFace), new PropertyMetadata(null, AnglePropertyChanged));
 
             Grid playerGrid = new Grid();
             playerGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(32) });
@@ -217,16 +217,16 @@ namespace Russia2018
             sb.Begin();
         }
 
-        //void ImageContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    localImageContent = (Image)e.NewValue;
-        //}
+        void ImageContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            localImageContent = (Image)e.NewValue;
+        }
 
-        //void AnglePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    localAngle = (double)e.NewValue;
-        //    rTransform.Angle = localAngle;
-        //}
+        void AnglePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            localAngle = (double)e.NewValue;
+            rTransform.Angle = localAngle;
+        }
 
         public object ImageContent
         {

@@ -165,7 +165,7 @@
                   </LinearGradientBrush>
                 </Border.Background>
               </Border>
-              <Image x:Name="imgBallStrength" Source="Jabulani.png" VerticalAlignment="Top" Margin="0,32,0,0">
+              <Image x:Name="imgBallStrength" Source="Images/Jabulani.png" VerticalAlignment="Top" Margin="0,32,0,0">
                 <Image.RenderTransform>
                   <RotateTransform x:Name="rtBallStrength" CenterX="11.5" CenterY="11.5" Angle="30">
                   </RotateTransform>
