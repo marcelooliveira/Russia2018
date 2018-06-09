@@ -21,6 +21,8 @@ namespace Russia2018
 {
     public sealed partial class MainPage : Page, IGoalObserver
     {
+        double ballStrength = 50;
+
         List<TurnEvent> turnEvents = new List<TurnEvent>();
         bool fallenBallsProcessed = false;
         PlayerState playerState = PlayerState.None;
@@ -1431,7 +1433,6 @@ namespace Russia2018
 
             started = true;
 
-            double ballStrength = 50;
 
             if (currentGame.Team1ID == currentGame.PlayingTeamID)
             {
@@ -2164,15 +2165,15 @@ namespace Russia2018
 
         private void brdBallStrengthContainer_MouseLeftButtonUp(object sender, PointerRoutedEventArgs e)
         {
-            //e.Handled = true;
+            e.Handled = true;
 
-            //double y = e.GetPosition(brdBallStrengthContainer).Y;
-            //if (y > (imgBallStrength.ActualHeight * 2.0) && y < (brdBallStrengthContainer.ActualHeight - imgBallStrength.ActualHeight))
-            //{
-            //    ballStrength = brdBallStrengthContainer.ActualHeight - y - imgBallStrength.ActualHeight;
-            //}
-            //imgBallStrength.Margin = new Thickness(0, y - imgBallStrength.ActualHeight / 2.0, 0, 0);
-            //brdStrength.Margin = new Thickness(8, y + imgBallStrength.ActualHeight / 2.0, 8, 8);
+            double y = e.GetCurrentPoint(brdBallStrengthContainer).Position.Y;
+            if (y > (imgBallStrength.ActualHeight * 2.0) && y < (brdBallStrengthContainer.ActualHeight - imgBallStrength.ActualHeight))
+            {
+                ballStrength = brdBallStrengthContainer.ActualHeight - y - imgBallStrength.ActualHeight;
+            }
+            imgBallStrength.Margin = new Thickness(0, y - imgBallStrength.ActualHeight / 2.0, 0, 0);
+            brdStrength.Margin = new Thickness(8, y + imgBallStrength.ActualHeight / 2.0, 8, 8);
         }
 
     }

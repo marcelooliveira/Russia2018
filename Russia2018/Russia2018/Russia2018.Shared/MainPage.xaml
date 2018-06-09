@@ -26,7 +26,7 @@
       </Border.Background>
       <Grid>
 
-        <Grid x:Name="LayoutRoot" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid x:Name="LayoutRoot" PointerReleased="LayoutRoot_MouseLeftButtonUp" VerticalAlignment="Center" HorizontalAlignment="Center">
           <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="colLeftEscapeArea" Width="53"/>
             <ColumnDefinition x:Name="colLeftPosts" Width="53"/>
@@ -154,7 +154,7 @@
               </Grid.Background>
             </Grid>
           </Border>
-          <Border x:Name="brdBallStrengthContainer" Grid.Column="8" Grid.Row="4" Grid.ColumnSpan="1" Grid.RowSpan="2" BorderBrush="White" Background="Black" CornerRadius="12" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="4">
+            <Border x:Name="brdBallStrengthContainer" Grid.Column="8" Grid.Row="4" Grid.ColumnSpan="1" Grid.RowSpan="2" BorderBrush="White" Background="Black" CornerRadius="12" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="4" PointerReleased="brdBallStrengthContainer_MouseLeftButtonUp">
             <Grid>
               <Border x:Name="brdStrength" CornerRadius="4" Margin="8,56,8,8">
                 <Border.Background>
