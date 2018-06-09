@@ -116,7 +116,11 @@ namespace Russia2018
             Grid playerGrid = new Grid();
             playerGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(32) });
             playerGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(36) });
-            playerGrid.Children.Add(new Image() { Margin = new Thickness(-9, 0, 0, 0), Source = new BitmapImage(new Uri(string.Format("../Images/{0}.png", player.Team.TeamID), UriKind.Relative)), Stretch = Stretch.Uniform });
+
+            playerGrid.Children.Add(new Image() { Margin = new Thickness(-9, 0, 0, 0)
+                , Source = new BitmapImage(new Uri(string.Format("ms-appx:///Images/{0}.png", player.Team.TeamID)))
+                , Stretch = Stretch.Uniform });
+
             playerGrid.Children.Add(new TextBlock() { Text = player.Id, Foreground = new SolidColorBrush(player.Team.NumberColor), Margin = new Thickness(24, 8, 0, 0), FontSize = 11, FontFamily = new FontFamily("Calibri") });
 
             cPresenter = new ContentPresenter()
@@ -132,7 +136,7 @@ namespace Russia2018
 
             Image imgPointer = new Image()
             {
-                Source = new BitmapImage(new Uri("../Images/PlayerPointer.PNG", UriKind.Relative)),
+                Source = new BitmapImage(new Uri("ms-appx:///Images/PlayerPointer.PNG")),
                 Opacity = 0.50
 
             };

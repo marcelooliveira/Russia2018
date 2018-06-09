@@ -195,7 +195,9 @@ namespace Russia2018
 
             ResetPlayerPositions(currentGame.Teams[currentGame.Team1ID], currentGame.Teams[currentGame.Team2ID], rootCanvas, discoids, goalPost00Point.X, goalPost10Point.X, rowTopEscapeArea.Height.Value, fieldHeight - rowTopEscapeArea.Height.Value);
 
-            LayoutRoot.Background = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../Images/Grass.png", UriKind.Relative)) };
+            LayoutRoot.Background = new ImageBrush() { ImageSource = 
+                new BitmapImage(new Uri("ms-appx:///Images/Grass.png"))
+            };
 
             tableBorders.Add(new TableBorder(0, -20, (int)fieldWidth, 20));
             tableBorders.Add(new TableBorder(0, (int)fieldHeight, (int)fieldWidth, 200));

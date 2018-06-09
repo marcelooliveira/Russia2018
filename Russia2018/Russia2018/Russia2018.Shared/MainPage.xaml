@@ -59,7 +59,7 @@
           <Border Grid.Column="7" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="5" Background="DarkGreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
           <Border Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="8" Grid.RowSpan="1" Background="DarkGreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
           <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="6" Grid.RowSpan="5" Margin="8, 8, 0, 0" Opacity="0.50">
-            <Image Source="Soccerlight.png" Stretch="UniformToFill">
+            <Image x:Name="imgSoccerlight" Source="Soccerlight.png" Stretch="UniformToFill">
               <Image.RenderTransform>
                 <ScaleTransform ScaleX="0.25" ScaleY="0.25"/>
               </Image.RenderTransform>

@@ -51,7 +51,7 @@ namespace Russia2018
             TextBlock txtX = new TextBlock() { Text = "x" };
 
             imgBall1.Source =
-            imgBall2.Source = new BitmapImage(new Uri(this.BaseUri, "../Images/Jabulani.png"));
+            imgBall2.Source = new BitmapImage(new Uri("ms-appx:///Images/Jabulani.png"));
 
             imgBall1.SetValue(MarginProperty, new Thickness(0, 2, 0, 0));
             imgBall2.SetValue(MarginProperty, new Thickness(0, 2, 0, 0));
@@ -259,8 +259,8 @@ namespace Russia2018
 
             brdRound.Background = lgb;// new SolidColorBrush(Colors.Black);
 
-            Image maskImage = new Image();
-            maskImage.Source = new BitmapImage(new Uri("../Images/ScoreMask.png", UriKind.Relative));
+            //Image maskImage = new Image();
+            //maskImage.Source = new BitmapImage(new Uri("../Images/ScoreMask.png", UriKind.Relative));
 
             brdTeam1ScoreAux.Child = txtTeam1ScoreAux;
             brdTeam2ScoreAux.Child = txtTeam2ScoreAux;

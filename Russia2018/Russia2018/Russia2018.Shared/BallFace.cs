@@ -85,13 +85,15 @@ namespace Russia2018
                 }
             };
 
-            //ImageContentProperty = DependencyProperty.Register("ImageContent", typeof(object), typeof(BallFace), new PropertyMetadata(ImageContentPropertyChanged));
-            //AngleProperty = DependencyProperty.Register("Angle", typeof(double), typeof(BallFace), new PropertyMetadata(AnglePropertyChanged));
+            ImageContentProperty = DependencyProperty.Register("ImageContent", typeof(object), typeof(BallFace), new PropertyMetadata(null, ImageContentPropertyChanged));
+            AngleProperty = DependencyProperty.Register("Angle", typeof(double), typeof(BallFace), new PropertyMetadata(null, AnglePropertyChanged));
 
             Grid playerGrid = new Grid();
             playerGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(13) });
             playerGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(13) });
-            playerGrid.Children.Add(new Image() { Margin = new Thickness(0, 0, 0, 0), Source = new BitmapImage(new Uri(string.Format("../Images/{0}.png", teamName), UriKind.Relative)) });
+            playerGrid.Children.Add(new Image() { Margin = new Thickness(0, 0, 0, 0), Source 
+                = new BitmapImage(new Uri(string.Format("ms-appx:///Images/{0}.png", teamName)))
+            });
 
             cPresenter = new ContentPresenter()
             {

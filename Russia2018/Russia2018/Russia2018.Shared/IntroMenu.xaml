@@ -18,7 +18,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="200"/>
         </Grid.RowDefinitions>
-        <Image Grid.Column="1" Grid.Row="0" Source="../Images/Soccerlight.png"/>
+        <Image x:Name="imgSoccerLight" Grid.Column="1" Grid.Row="0" Source="../Images/Soccerlight.png"/>
         <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="370"/>
