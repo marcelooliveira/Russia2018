@@ -95,7 +95,7 @@ namespace Russia2018
             clockTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
 
             movementTimer.Tick += movementTimer_Tick;
-            movementTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+            movementTimer.Interval = new TimeSpan(0, 0, 0, 0, 3);
             movementTimer.Start();
 
             clockTimer.Start();
@@ -1346,7 +1346,7 @@ namespace Russia2018
 
         private void LayoutRoot_MouseLeftButtonUp(object sender, PointerRoutedEventArgs e)
         {
-            var position = e.GetCurrentPoint(this).Position;
+            var position = e.GetCurrentPoint(rootCanvas).Position;
 
             if ((position.X > strengthPointNW.X) &&
                 (position.X < strengthPointSE.X) &&
