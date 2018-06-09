@@ -17,7 +17,6 @@ namespace Russia2018
 
         Image localImageContent = null;
         double localAngle = 0;
-        int number;
         ContentPresenter cPresenter;
         RotateTransform rTransform;
 
@@ -30,23 +29,6 @@ namespace Russia2018
             gsCollection.Add(new GradientStop() { Offset = 0.4, Color = Color.FromArgb(255, 0x20, 0x20, 0x20) });
             gsCollection.Add(new GradientStop() { Offset = 0.5, Color = Color.FromArgb(255, 0x20, 0x20, 0x20) });
             gsCollection.Add(new GradientStop() { Offset = 1.0, Color = Color.FromArgb(255, 0xFF, 0xFF, 0xFF) });
-
-            //GradientBrush rgb = new GradientBrush(gsCollection);
-            //rgb .Center = new Point(0.5, 0.5); //Center="0.5, 0.5" RadiusX="0.9" RadiusY="0.9"
-            //rgb.RadiusX = 0.25;
-            //rgb.RadiusY = 0.25;
-            //this.Background = rgb;
-
-            //this.Children.Add(new Border() { BorderThickness = new Thickness(2), BorderBrush = new SolidColorBrush(Colors.White)});
-
-            //<Ellipse Margin="11,7,11,23">
-            //<Ellipse.Fill>
-            //<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-            //<GradientStop Color="#ffffffff" Offset="0.00"/>
-            //<GradientStop x:Name="centralGradientStop" Color="#ff008D00" Offset="1.00"/>
-            //</LinearGradientBrush>
-            //</Ellipse.Fill>
-            //</Ellipse>
 
             Ellipse eCenter = new Ellipse()
             {

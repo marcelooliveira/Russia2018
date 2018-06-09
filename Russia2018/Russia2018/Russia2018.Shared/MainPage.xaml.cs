@@ -22,7 +22,7 @@ namespace Russia2018
     public sealed partial class MainPage : Page, IGoalObserver
     {
         double ballStrength = 50;
-
+        int PlayersByTeam = 11;
         List<TurnEvent> turnEvents = new List<TurnEvent>();
         bool fallenBallsProcessed = false;
         PlayerState playerState = PlayerState.None;
@@ -310,8 +310,11 @@ namespace Russia2018
                 }
             }
 
-            int[] classicalPlayerPositions = new int[] { 1, 3, 4, 5, 2, 7, 8, 10, 6, 11, 9 };
-            for (int i = 0; i <= 10; i++)
+            int[] classicalPlayerPositions = GetClassicalPlayerPositions();
+
+            PlayersByTeam = classicalPlayerPositions.Length;
+
+            for (int i = 0; i <= PlayersByTeam - 1; i++)
             {
                 Player p1 = new Player(currentGame.Teams[currentGame.Team1ID], classicalPlayerPositions[i]);
                 p1.Position.X = 0;
@@ -348,6 +351,20 @@ namespace Russia2018
 
                 discoids.Add(p1);
                 discoids.Add(p2);
+            }
+        }
+
+        private static int[] GetClassicalPlayerPositions()
+        {
+            var teamLineUp = new Random(DateTime.Now.Millisecond).Next(0, 2);
+
+            if (teamLineUp == 0)
+            {
+                return new int[] { 1, 3, 5, 7, 10, 11 };
+            }
+            else
+            {
+                return new int[] { 1, 4, 2, 8, 6, 9 };
             }
         }
 
@@ -1250,7 +1267,7 @@ namespace Russia2018
             double columnWidth2 = ((rightEndX - leftEndX) / 2) / columnCount2;
             double rowHeight1 = 2 * ((bottomEndY - topEndY) / 2) / rowCount1;
             double rowHeight2 = 2 * ((bottomEndY - topEndY) / 2) / rowCount2;
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= PlayersByTeam - 1; i++)
             {
                 rowCount1 = currentGame.Teams[currentGame.Team1ID].Formation[currentColumn1];
                 rowCount2 = currentGame.Teams[currentGame.Team2ID].Formation[currentColumn2];
