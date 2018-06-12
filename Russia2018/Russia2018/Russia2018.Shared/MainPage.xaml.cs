@@ -2187,7 +2187,7 @@ namespace Russia2018
             double y = e.GetCurrentPoint(brdBallStrengthContainer).Position.Y;
             if (y > (imgBallStrength.ActualHeight * 2.0) && y < (brdBallStrengthContainer.ActualHeight - imgBallStrength.ActualHeight))
             {
-                ballStrength = brdBallStrengthContainer.ActualHeight - y - imgBallStrength.ActualHeight;
+                ballStrength = 2 * (brdBallStrengthContainer.ActualHeight - y - imgBallStrength.ActualHeight);
             }
             imgBallStrength.Margin = new Thickness(0, y - imgBallStrength.ActualHeight / 2.0, 0, 0);
             brdStrength.Margin = new Thickness(8, y + imgBallStrength.ActualHeight / 2.0, 8, 8);
