@@ -23,14 +23,13 @@ namespace Russia2018
     {
         const int GROUPCOUNT = 8;
         List<Group> groups;
-        Dictionary<string, Team> teamsDictionary;
+        Dictionary<string, SoccerTeam> teamsDictionary;
         LinearGradientBrush lgbEven = new LinearGradientBrush();
 
         public IntroMenu()
         {
             this.InitializeComponent();
             GenerateGroups();
-
             groups = GameHelper.Instance.Groups;
             teamsDictionary = GameHelper.Instance.TeamsDictionary;
         }
@@ -97,7 +96,7 @@ namespace Russia2018
                     grdTeam.VerticalAlignment = VerticalAlignment.Center;
                     grdTeam.Width = 120;
 
-                    Team team = GameHelper.Instance.TeamsDictionary[GameHelper.Instance.TeamCodes[i * 4 + j]];
+                    SoccerTeam team = GameHelper.Instance.TeamsDictionary[GameHelper.Instance.TeamCodes[i * 4 + j]];
                     Image img = new Image()
                     {
                         Source = new BitmapImage(new Uri(string.Format(@"http://www.fifa.com/imgml/flags/reflected/m/{0}.png", team.TeamID.ToLower()), UriKind.Absolute)),

@@ -1,5 +1,16 @@
-﻿using Russia2018.Model;
+﻿using Newtonsoft.Json;
+using Russia2018.Model;
+using Russia2018.Shared.Model;
+using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization.Json;
+using System.Text;
+using System.Threading.Tasks;
+using Windows.Data.Json;
+using Windows.Storage;
 using Windows.UI;
 
 namespace Russia2018
@@ -10,11 +21,15 @@ namespace Russia2018
 
         private GameHelper()
         {
+        }
+
+        public async Task Initialize()
+        {
             Groups = new List<Group>();
             TeamCodes = new List<string>();
-            TeamsDictionary = new Dictionary<string, Team>();
+            TeamsDictionary = new Dictionary<string, SoccerTeam>();
             AddGroups();
-            AddTeams();
+            await AddTeams();
             AddTeamCodes();
         }
 
@@ -59,7 +74,11 @@ namespace Russia2018
             get
             {
                 if (instance == null)
+                {
                     instance = new GameHelper();
+                    instance.Initialize().Wait();
+                }
+
                 return instance;
             }
         }
@@ -68,8 +87,9 @@ namespace Russia2018
         public Player CurrentSelectedPlayer { get; set;}
         public bool IsMovingDiscoids { get; set; }
         public List<Group> Groups { get; set; }
-        public Dictionary<string, Team> TeamsDictionary { get; set; }
+        public Dictionary<string, SoccerTeam> TeamsDictionary { get; set; }
         public List<string> TeamCodes { get; set; }
+        public WorldCupData WorldCupData { get; set; }
 
         void AddGroups()
         {
@@ -83,80 +103,45 @@ namespace Russia2018
             Groups.Add(new Group() { GroupID ="H" });
         }
 
-        void AddTeams()
+        async Task AddTeams()
         {
-            TeamsDictionary.Add("RUS", new Team() { TeamID ="RUS", TeamName ="Russia", NumberColor = Colors.White, GroupID ="A" });//43965 
-            TeamsDictionary.Add("KSA", new Team() { TeamID ="KSA", TeamName ="Saudi Arabia", NumberColor = Colors.White, GroupID ="A" });//43835 
-            TeamsDictionary.Add("EGY", new Team() { TeamID ="EGY", TeamName ="Egypt", NumberColor = Colors.White, GroupID ="A" });//43855 
-            TeamsDictionary.Add("URU", new Team() { TeamID ="URU", TeamName ="Uruguay", NumberColor = Colors.White, GroupID ="A" });//43930 
+            WorldCupData = await LoadJsonData();
 
-            TeamsDictionary.Add("POR", new Team() { TeamID ="POR", TeamName ="Portugal", NumberColor = Colors.White, GroupID ="B" });//43963 
-            TeamsDictionary.Add("ESP", new Team() { TeamID ="ESP", TeamName ="Spain", NumberColor = Colors.White, GroupID ="B" });//43969 
-            TeamsDictionary.Add("MAR", new Team() { TeamID ="MAR", TeamName ="Morocco", NumberColor = Colors.White, GroupID ="B" });//43872 
-            TeamsDictionary.Add("IRN", new Team() { TeamID ="IRN", TeamName ="IR Iran", NumberColor = Colors.White, GroupID ="B" });//43817 
+            AddGroupTeams(WorldCupData, "A", WorldCupData.groups.a.matches);
+            AddGroupTeams(WorldCupData, "B", WorldCupData.groups.b.matches);
+            AddGroupTeams(WorldCupData, "C", WorldCupData.groups.c.matches);
+            AddGroupTeams(WorldCupData, "D", WorldCupData.groups.d.matches);
+            AddGroupTeams(WorldCupData, "E", WorldCupData.groups.e.matches);
+            AddGroupTeams(WorldCupData, "F", WorldCupData.groups.f.matches);
+            AddGroupTeams(WorldCupData, "G", WorldCupData.groups.g.matches);
+            AddGroupTeams(WorldCupData, "H", WorldCupData.groups.h.matches);
+        }
 
-            TeamsDictionary.Add("FRA", new Team() { TeamID ="FRA", TeamName ="France", NumberColor = Colors.White, GroupID ="C" });//43946 
-            TeamsDictionary.Add("AUS", new Team() { TeamID ="AUS", TeamName ="Australia", NumberColor = Colors.White, GroupID ="C" });//43976 
-            TeamsDictionary.Add("PER", new Team() { TeamID ="PER", TeamName ="Peru", NumberColor = Colors.White, GroupID ="C" });//43929 
-            TeamsDictionary.Add("DEN", new Team() { TeamID ="DEN", TeamName ="Denmark", NumberColor = Colors.White, GroupID ="C" });//43941 
+        private void AddGroupTeams(WorldCupData jsonData, string groupName, List<Match> matches)
+        {
+            var teamIdsInGroup =
+                matches.Select(m => m.home_team)
+                .Union(matches.Select(m => m.away_team))
+                .Distinct();
+            var teamsInGroup =
+                from t in jsonData.teams
+                from id in teamIdsInGroup
+                where t.id == id
+                select t;
 
-            TeamsDictionary.Add("ARG", new Team() { TeamID ="ARG", TeamName ="Argentina", NumberColor = Colors.White, GroupID ="D" });//43922 
-            TeamsDictionary.Add("ISL", new Team() { TeamID ="ISL", TeamName ="Iceland", NumberColor = Colors.White, GroupID ="D" });//43951 
-            TeamsDictionary.Add("CRO", new Team() { TeamID ="CRO", TeamName ="Croatia", NumberColor = Colors.White, GroupID ="D" });//43938 
-            TeamsDictionary.Add("NGA", new Team() { TeamID ="NGA", TeamName ="Nigeria", NumberColor = Colors.White, GroupID ="D" });//43876 
+            foreach (var team in teamsInGroup)
+            {
+                TeamsDictionary.Add(team.fifaCode, new SoccerTeam() { TeamID = team.fifaCode, TeamName = team.name, NumberColor = Colors.White, GroupID = groupName });
+            }
+        }
 
-            TeamsDictionary.Add("BRA", new Team() { TeamID ="BRA", TeamName ="Brazil", NumberColor = Colors.White, GroupID ="E" });//43924 
-            TeamsDictionary.Add("SUI", new Team() { TeamID ="SUI", TeamName ="Switzerland", NumberColor = Colors.White, GroupID ="E" });//43971 
-            TeamsDictionary.Add("CRC", new Team() { TeamID ="CRC", TeamName ="Costa Rica", NumberColor = Colors.White, GroupID ="E" });//43901 
-            TeamsDictionary.Add("SRB", new Team() { TeamID ="SRB", TeamName ="Serbia", NumberColor = Colors.White, GroupID ="E" });//1902465  
-
-            TeamsDictionary.Add("GER", new Team() { TeamID ="GER", TeamName ="Germany", NumberColor = Colors.White, GroupID ="F" });//43948 
-            TeamsDictionary.Add("MEX", new Team() { TeamID ="MEX", TeamName ="Mexico", NumberColor = Colors.White, GroupID ="F" });//43911 
-            TeamsDictionary.Add("SWE", new Team() { TeamID ="SWE", TeamName ="Sweden", NumberColor = Colors.White, GroupID ="F" });//43970 
-            TeamsDictionary.Add("KOR", new Team() { TeamID ="KOR", TeamName ="Korea Republic", NumberColor = Colors.White, GroupID ="F" });//43822 
-
-            TeamsDictionary.Add("BEL", new Team() { TeamID ="BEL", TeamName ="Belgium", NumberColor = Colors.White, GroupID ="G" });//43935 
-            TeamsDictionary.Add("PAN", new Team() { TeamID ="PAN", TeamName ="Panama", NumberColor = Colors.White, GroupID ="G" });//43914 
-            TeamsDictionary.Add("TUN", new Team() { TeamID ="TUN", TeamName ="Tunisia", NumberColor = Colors.White, GroupID ="G" });//43888 
-            TeamsDictionary.Add("ENG", new Team() { TeamID ="ENG", TeamName ="England", NumberColor = Colors.White, GroupID ="G" });//43942 
-
-            TeamsDictionary.Add("POL", new Team() { TeamID ="POL", TeamName ="Poland", NumberColor = Colors.White, GroupID ="H" });//43962 
-            TeamsDictionary.Add("SEN", new Team() { TeamID ="SEN", TeamName ="Senegal", NumberColor = Colors.White, GroupID ="H" });//43879 
-            TeamsDictionary.Add("COL", new Team() { TeamID ="COL", TeamName ="Colombia", NumberColor = Colors.White, GroupID ="H" });//43926 
-            TeamsDictionary.Add("JPN", new Team() { TeamID ="JPN", TeamName ="Japan", NumberColor = Colors.White, GroupID ="H" });//43819 
-
-            //TeamsDictionary.Add("RSA", new Team() { TeamID ="RSA", TeamName ="South Africa", NumberColor = Colors.White, GroupID ="A", R1 = 0x00, G1 = 0x00, B1 = 0x00, R2 = 0x00, G2 = 0x00, B2 = 0x00, R3 = 0x00, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("MEX", new Team() { TeamID ="MEX", TeamName ="Mexico", NumberColor = Colors.White, GroupID ="A", R1 = 0x00, G1 = 0x00, B1 = 0x00, R2 = 0x00, G2 = 0x00, B2 = 0x00, R3 = 0x00, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("URU", new Team() { TeamID ="URU", TeamName ="Uruguay", NumberColor = Colors.Black, GroupID ="B", R1 = 0x00, G1 = 0xE0, B1 = 0xE0, R2 = 0x00, G2 = 0xF0, B2 = 0xFF, R3 = 0x00, G3 = 0xF0, B3 = 0xFF });
-            //TeamsDictionary.Add("FRA", new Team() { TeamID ="FRA", TeamName ="France", NumberColor = Colors.White, GroupID ="A", R1 = 0x00, G1 = 0x00, B1 = 0x40, R2 = 0x00, G2 = 0x00, B2 = 0x8D, R3 = 0x00, G3 = 0x00, B3 = 0x8D });
-            //TeamsDictionary.Add("ARG", new Team() { TeamID ="ARG", TeamName ="Argentina", NumberColor = Colors.Black, GroupID ="B", R1 = 0x00, G1 = 0xE0, B1 = 0xE0, R2 = 0x00, G2 = 0xF0, B2 = 0xFF, R3 = 0x00, G3 = 0xF0, B3 = 0xFF });
-            //TeamsDictionary.Add("NGA", new Team() { TeamID ="NGA", TeamName ="Nigeria", NumberColor = Colors.White, GroupID ="B", R1 = 0x00, G1 = 0x00, B1 = 0x00, R2 = 0x00, G2 = 0x00, B2 = 0x00, R3 = 0x00, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("KOR", new Team() { TeamID ="KOR", TeamName ="South Korea", NumberColor = Colors.White, GroupID ="B", R1 = 0x40, G1 = 0x00, B1 = 0x00, R2 = 0x8D, G2 = 0x00, B2 = 0x00, R3 = 0x8D, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("GRE", new Team() { TeamID ="GRE", TeamName ="Greece", NumberColor = Colors.White, GroupID ="A", R1 = 0x00, G1 = 0x00, B1 = 0x40, R2 = 0x00, G2 = 0x00, B2 = 0x8D, R3 = 0x00, G3 = 0x00, B3 = 0x8D });
-            //TeamsDictionary.Add("ENG", new Team() { TeamID ="ENG", TeamName ="England", NumberColor = Colors.White, GroupID ="C", R1 = 0x40, G1 = 0x00, B1 = 0x00, R2 = 0x8D, G2 = 0x00, B2 = 0x00, R3 = 0x8D, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("USA", new Team() { TeamID ="USA", TeamName ="United States", NumberColor = Colors.Black, GroupID ="C", R1 = 0xB0, G1 = 0xB0, B1 = 0xB0, R2 = 0xC0, G2 = 0xC0, B2 = 0xC0, R3 = 0xF0, G3 = 0xF0, B3 = 0xF0 });
-            //TeamsDictionary.Add("ALG", new Team() { TeamID ="ALG", TeamName ="Algeria", NumberColor = Colors.White, GroupID ="C", R1 = 0x00, G1 = 0x00, B1 = 0x00, R2 = 0x00, G2 = 0x00, B2 = 0x00, R3 = 0x00, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("SVN", new Team() { TeamID ="SVN", TeamName ="Slovenia", NumberColor = Colors.White, GroupID ="A", R1 = 0x00, G1 = 0x00, B1 = 0x40, R2 = 0x00, G2 = 0x00, B2 = 0x8D, R3 = 0x00, G3 = 0x00, B3 = 0x8D });
-            //TeamsDictionary.Add("GER", new Team() { TeamID ="GER", TeamName ="Germany", NumberColor = Colors.Black, GroupID ="D", R1 = 0xB0, G1 = 0xB0, B1 = 0xB0, R2 = 0xC0, G2 = 0xC0, B2 = 0xC0, R3 = 0xF0, G3 = 0xF0, B3 = 0xF0 });
-            //TeamsDictionary.Add("AUS", new Team() { TeamID ="AUS", TeamName ="Australia", NumberColor = Colors.Blue, GroupID ="G", R1 = 0x80, G1 = 0x70, B1 = 0x00, R2 = 0xC0, G2 = 0xB0, B2 = 0x00, R3 = 0xC0, G3 = 0xB0, B3 = 0x00 });
-            //TeamsDictionary.Add("SRB", new Team() { TeamID ="SRB", TeamName ="Serbia", NumberColor = Colors.White, GroupID ="D", R1 = 0x40, G1 = 0x00, B1 = 0x00, R2 = 0x8D, G2 = 0x00, B2 = 0x00, R3 = 0x8D, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("GHA", new Team() { TeamID ="GHA", TeamName ="Ghana", NumberColor = Colors.White, GroupID ="D", R1 = 0x00, G1 = 0x00, B1 = 0x00, R2 = 0x00, G2 = 0x00, B2 = 0x00, R3 = 0x00, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("NED", new Team() { TeamID ="NED", TeamName ="Netherlands", NumberColor = Colors.White, GroupID ="E", R1 = 0x00, G1 = 0x00, B1 = 0x00, R2 = 0x00, G2 = 0x00, B2 = 0x00, R3 = 0x00, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("DEN", new Team() { TeamID ="DEN", TeamName ="Denmark", NumberColor = Colors.White, GroupID ="E", R1 = 0x40, G1 = 0x00, B1 = 0x00, R2 = 0x8D, G2 = 0x00, B2 = 0x00, R3 = 0x8D, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("JPN", new Team() { TeamID ="JPN", TeamName ="Japan", NumberColor = Colors.White, GroupID ="A", R1 = 0x00, G1 = 0x00, B1 = 0x40, R2 = 0x00, G2 = 0x00, B2 = 0x8D, R3 = 0x00, G3 = 0x00, B3 = 0x8D });
-            //TeamsDictionary.Add("CMR", new Team() { TeamID ="CMR", TeamName ="Cameroon", NumberColor = Colors.White, GroupID ="E", R1 = 0x00, G1 = 0x00, B1 = 0x00, R2 = 0x00, G2 = 0x00, B2 = 0x00, R3 = 0x00, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("ITA", new Team() { TeamID ="ITA", TeamName ="Italy", NumberColor = Colors.White, GroupID ="A", R1 = 0x00, G1 = 0x00, B1 = 0x40, R2 = 0x00, G2 = 0x00, B2 = 0x8D, R3 = 0x00, G3 = 0x00, B3 = 0x8D });
-            //TeamsDictionary.Add("PAR", new Team() { TeamID ="PAR", TeamName ="Paraguay", NumberColor = Colors.White, GroupID ="F", R1 = 0x00, G1 = 0x00, B1 = 0x00, R2 = 0x00, G2 = 0x00, B2 = 0x00, R3 = 0x00, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("NZL", new Team() { TeamID ="NZL", TeamName ="New Zealand", NumberColor = Colors.White, GroupID ="F", R1 = 0x00, G1 = 0x00, B1 = 0x00, R2 = 0x00, G2 = 0x00, B2 = 0x00, R3 = 0x00, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("SVK", new Team() { TeamID ="SVK", TeamName ="Slovakia", NumberColor = Colors.White, GroupID ="A", R1 = 0x00, G1 = 0x00, B1 = 0x40, R2 = 0x00, G2 = 0x00, B2 = 0x8D, R3 = 0x00, G3 = 0x00, B3 = 0x8D });
-            //TeamsDictionary.Add("BRA", new Team() { TeamID ="BRA", TeamName ="Brazil", NumberColor = Colors.Blue, GroupID ="G", R1 = 0x80, G1 = 0x70, B1 = 0x00, R2 = 0xC0, G2 = 0xB0, B2 = 0x00, R3 = 0xC0, G3 = 0xB0, B3 = 0x00 });
-            //TeamsDictionary.Add("PRK", new Team() { TeamID ="PRK", TeamName ="North Korea", NumberColor = Colors.White, GroupID ="G", R1 = 0x40, G1 = 0x00, B1 = 0x00, R2 = 0x8D, G2 = 0x00, B2 = 0x00, R3 = 0x8D, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("CIV", new Team() { TeamID ="CIV", TeamName ="Ivory Coast", NumberColor = Colors.Blue, GroupID ="G", R1 = 0x80, G1 = 0x70, B1 = 0x00, R2 = 0xC0, G2 = 0xB0, B2 = 0x00, R3 = 0xC0, G3 = 0xB0, B3 = 0x00 });
-            //TeamsDictionary.Add("POR", new Team() { TeamID ="POR", TeamName ="Portugal", NumberColor = Colors.White, GroupID ="G", R1 = 0x40, G1 = 0x00, B1 = 0x00, R2 = 0x8D, G2 = 0x00, B2 = 0x00, R3 = 0x8D, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("ESP", new Team() { TeamID ="ESP", TeamName ="Spain", NumberColor = Colors.White, GroupID ="H", R1 = 0x00, G1 = 0x00, B1 = 0x00, R2 = 0x00, G2 = 0x00, B2 = 0x00, R3 = 0x00, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("SUI", new Team() { TeamID ="SUI", TeamName ="Switzerland", NumberColor = Colors.White, GroupID ="H", R1 = 0x40, G1 = 0x00, B1 = 0x00, R2 = 0x8D, G2 = 0x00, B2 = 0x00, R3 = 0x8D, G3 = 0x00, B3 = 0x00 });
-            //TeamsDictionary.Add("HON", new Team() { TeamID ="HON", TeamName ="Honduras", NumberColor = Colors.White, GroupID ="A", R1 = 0x00, G1 = 0x00, B1 = 0x40, R2 = 0x00, G2 = 0x00, B2 = 0x8D, R3 = 0x00, G3 = 0x00, B3 = 0x8D });
-            //TeamsDictionary.Add("CHI", new Team() { TeamID ="CHI", TeamName ="Chile", NumberColor = Colors.White, GroupID ="H", R1 = 0x40, G1 = 0x00, B1 = 0x00, R2 = 0x8D, G2 = 0x00, B2 = 0x00, R3 = 0x8D, G3 = 0x00, B3 = 0x00 });
+        async Task<WorldCupData> LoadJsonData()
+        {
+            Uri appUri = new Uri("ms-appx:///Assets/data.json");
+            StorageFile anjFile = StorageFile.GetFileFromApplicationUriAsync(appUri).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
+            string jsonText = FileIO.ReadTextAsync(anjFile).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
+            var rootObject = JsonConvert.DeserializeObject<WorldCupData>(jsonText);
+            return await Task.FromResult(rootObject);
         }
     }
 }

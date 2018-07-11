@@ -5,13 +5,13 @@ namespace Russia2018.Model
 {
     public class Game
     {
-        public Game(string stage, DateTime date, Team team1, Team team2, string stadium, string city)
+        public Game(string stage, DateTime date, SoccerTeam team1, SoccerTeam team2, string stadium, string city)
         {
             Stage = stage;
             Date = date;
             Stadium = stadium;
             City = city;
-            Teams = new Dictionary<string, Team>();
+            Teams = new Dictionary<string, SoccerTeam>();
             Scores = new Dictionary<string, int>();
             Fouls = new Dictionary<string, int>();
 
@@ -38,11 +38,11 @@ namespace Russia2018.Model
             Team1BallStrength = 50;
             Team2BallStrength = 50;
         }
-        public Team Team1 { get; set; }
-        public Team Team2 { get; set; }
+        public SoccerTeam Team1 { get; set; }
+        public SoccerTeam Team2 { get; set; }
         public string Team1ID { get; set; }
         public string Team2ID { get; set; }
-        public Dictionary<string, Team> Teams { get; set; }
+        public Dictionary<string, SoccerTeam> Teams { get; set; }
         public Dictionary<string, int> Scores { get; set; }
         public Dictionary<string, int> Fouls { get; set; }
         public string PlayingTeamID { get; set; }
@@ -59,7 +59,7 @@ namespace Russia2018.Model
             Team1ID = Team2ID;
             Team2ID = AuxTeamID;
 
-            Team auxTeam = Team1;
+            SoccerTeam auxTeam = Team1;
             Team1 = Team2;
             Team2 = auxTeam;
 

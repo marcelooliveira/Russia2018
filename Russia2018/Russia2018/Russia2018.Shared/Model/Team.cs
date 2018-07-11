@@ -3,11 +3,11 @@ using Windows.UI;
 
 namespace Russia2018.Model
 {
-    public class Team
+    public class SoccerTeam
     {
         int currentTeamIndex = 0;
 
-        public Team()
+        public SoccerTeam()
         {
             Formation = new int[] {1, 3, 5, 2};
         }

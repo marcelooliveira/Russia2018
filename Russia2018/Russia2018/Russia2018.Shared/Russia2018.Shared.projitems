@@ -35,6 +35,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\GoalPost.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\IGoalObserver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\JsonModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Player.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\PlayerPosition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Shot.cs" />

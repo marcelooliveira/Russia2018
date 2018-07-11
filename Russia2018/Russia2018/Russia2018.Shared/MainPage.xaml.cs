@@ -36,8 +36,8 @@ namespace Russia2018
         bool started = false;
         Game currentGame = null;
         List<Group> groups;
-        Dictionary<string, Team> teamsDictionary;
-        static List<Team> teams = new List<Team>();
+        Dictionary<string, SoccerTeam> teamsDictionary;
+        static List<SoccerTeam> teams = new List<SoccerTeam>();
         List<TeamPlayer> teamPlayers = new List<TeamPlayer>();
         DispatcherTimer movementTimer = new DispatcherTimer();
         DispatcherTimer clockTimer = new DispatcherTimer();
@@ -402,61 +402,27 @@ namespace Russia2018
 
         private void LoadGameTable(List<Game> gameTable)
         {
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/11/2010"), teamsDictionary["RSA"], teamsDictionary["MEX"], "Soccer City", "JohannesBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/11/2010"), teamsDictionary["URU"], teamsDictionary["FRA"], "Cape Town Stadium", "Cape Town"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/16/2010"), teamsDictionary["RSA"], teamsDictionary["URU"], "Loftus Versfeld Stadium", "Pretoria "));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/17/2010"), teamsDictionary["FRA"], teamsDictionary["MEX"], "Peter Mokaba Stadium", "Polokwane "));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/22/2010"), teamsDictionary["MEX"], teamsDictionary["URU"], "Royal Bafokeng Stadium", "RustenBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/22/2010"), teamsDictionary["FRA"], teamsDictionary["RSA"], "Free State Stadium", "Bloemfontein "));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/12/2010"), teamsDictionary["KOR"], teamsDictionary["GRE"], "Nelson Mandela Bay Stadium", "Port Elizabeth"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/12/2010"), teamsDictionary["ARG"], teamsDictionary["NGA"], "Ellis Park Stadium", "JohannesBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/17/2010"), teamsDictionary["ARG"], teamsDictionary["KOR"], "Soccer City", "JohannesBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/17/2010"), teamsDictionary["GRE"], teamsDictionary["NGA"], "Free State Stadium", "Bloemfontein "));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/22/2010"), teamsDictionary["NGA"], teamsDictionary["KOR"], "Moses Mabhida Stadium", "Durban"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/22/2010"), teamsDictionary["GRE"], teamsDictionary["ARG"], "Peter Mokaba Stadium", "Polokwane "));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/12/2010"), teamsDictionary["ENG"], teamsDictionary["USA"], "Royal Bafokeng Stadium", "RustenBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/13/2010"), teamsDictionary["ALG"], teamsDictionary["SVN"], "Peter Mokaba Stadium", "Polokwane "));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/18/2010"), teamsDictionary["SVN"], teamsDictionary["USA"], "Ellis Park Stadium", "JohannesBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/18/2010"), teamsDictionary["ENG"], teamsDictionary["ALG"], "Cape Town Stadium", "Cape Town"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/23/2010"), teamsDictionary["SVN"], teamsDictionary["ENG"], "Nelson Mandela Bay Stadium", "Port Elizabeth"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/23/2010"), teamsDictionary["USA"], teamsDictionary["ALG"], "Loftus Versfeld Stadium", "Pretoria "));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/13/2010"), teamsDictionary["SRB"], teamsDictionary["GHA"], "Loftus Versfeld Stadium", "Pretoria "));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/13/2010"), teamsDictionary["GER"], teamsDictionary["AUS"], "Moses Mabhida Stadium", "Durban"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/18/2010"), teamsDictionary["GER"], teamsDictionary["SRB"], "Nelson Mandela Bay Stadium", "Port Elizabeth"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/19/2010"), teamsDictionary["GHA"], teamsDictionary["AUS"], "Royal Bafokeng Stadium", "RustenBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/23/2010"), teamsDictionary["GHA"], teamsDictionary["GER"], "Soccer City", "JohannesBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/23/2010"), teamsDictionary["AUS"], teamsDictionary["SRB"], "Mbombela Stadium", "Nelspruit"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/14/2010"), teamsDictionary["NED"], teamsDictionary["DEN"], "Soccer City", "JohannesBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/14/2010"), teamsDictionary["JPN"], teamsDictionary["CMR"], "Free State Stadium", "Bloemfontein "));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/19/2010"), teamsDictionary["NED"], teamsDictionary["JPN"], "Moses Mabhida Stadium", "Durban"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/19/2010"), teamsDictionary["CMR"], teamsDictionary["DEN"], "Loftus Versfeld Stadium", "Pretoria "));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/24/2010"), teamsDictionary["DEN"], teamsDictionary["JPN"], "Royal Bafokeng Stadium", "RustenBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/24/2010"), teamsDictionary["CMR"], teamsDictionary["NED"], "Cape Town Stadium", "Cape Town"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/14/2010"), teamsDictionary["CMR"], teamsDictionary["PAR"], "Cape Town Stadium", "Cape Town"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/15/2010"), teamsDictionary["NZL"], teamsDictionary["SVK"], "Royal Bafokeng Stadium", "RustenBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/20/2010"), teamsDictionary["SVK"], teamsDictionary["PAR"], "Free State Stadium", "Bloemfontein "));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/20/2010"), teamsDictionary["CMR"], teamsDictionary["NZL"], "Mbombela Stadium", "Nelspruit"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/24/2010"), teamsDictionary["SVK"], teamsDictionary["CMR"], "Ellis Park Stadium", "JohannesBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/24/2010"), teamsDictionary["PAR"], teamsDictionary["NZL"], "Peter Mokaba Stadium", "Polokwane "));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/15/2010"), teamsDictionary["BRA"], teamsDictionary["PRK"], "Ellis Park Stadium", "JohannesBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/15/2010"), teamsDictionary["POR"], teamsDictionary["CIV"], "Soccer City", "JohannesBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/20/2010"), teamsDictionary["BRA"], teamsDictionary["CIV"], "Soccer City", "JohannesBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/25/2010"), teamsDictionary["BRA"], teamsDictionary["POR"], "Nelson Mandela Bay Stadium", "Port Elizabeth"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/21/2010"), teamsDictionary["POR"], teamsDictionary["PRK"], "Cape Town Stadium", "Cape Town"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/25/2010"), teamsDictionary["POR"], teamsDictionary["BRA"], "Moses Mabhida Stadium", "Durban"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/25/2010"), teamsDictionary["PRK"], teamsDictionary["BRA"], "Mbombela Stadium", "Nelspruit"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/16/2010"), teamsDictionary["HON"], teamsDictionary["CHI"], "Mbombela Stadium", "Nelspruit"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/16/2010"), teamsDictionary["ESP"], teamsDictionary["SUI"], "Moses Mabhida Stadium", "Durban"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/21/2010"), teamsDictionary["CHI"], teamsDictionary["SUI"], "Nelson Mandela Bay Stadium", "Port Elizabeth"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/21/2010"), teamsDictionary["ESP"], teamsDictionary["HON"], "Ellis Park Stadium", "JohannesBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/25/2010"), teamsDictionary["CHI"], teamsDictionary["ESP"], "Loftus Versfeld Stadium", "Pretoria "));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/25/2010"), teamsDictionary["SUI"], teamsDictionary["HON"], "Free State Stadium", "Bloemfontein "));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/14/2010"), teamsDictionary["ITA"], teamsDictionary["PAR"], "Cape Town Stadium", "Cape Town"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/15/2010"), teamsDictionary["NZL"], teamsDictionary["SVK"], "Royal Bafokeng Stadium", "RustenBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/20/2010"), teamsDictionary["SVK"], teamsDictionary["PAR"], "Free State Stadium", "Bloemfontein"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/24/2010"), teamsDictionary["ITA"], teamsDictionary["NZL"], "Mbombela Stadium", "Nelspruit"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/14/2010"), teamsDictionary["SVK"], teamsDictionary["ITA"], "Ellis Park Stadium", "JohannesBurg"));
-            gameTable.Add(new Game("GRP", Convert.ToDateTime("06/14/2010"), teamsDictionary["PAR"], teamsDictionary["NZL"], "Peter Mokaba Stadium", "Polokwane "));
+            AddMatches(gameTable, GameHelper.Instance.WorldCupData.groups.a.matches);
+            AddMatches(gameTable, GameHelper.Instance.WorldCupData.groups.b.matches);
+            AddMatches(gameTable, GameHelper.Instance.WorldCupData.groups.c.matches);
+            AddMatches(gameTable, GameHelper.Instance.WorldCupData.groups.d.matches);
+            AddMatches(gameTable, GameHelper.Instance.WorldCupData.groups.e.matches);
+            AddMatches(gameTable, GameHelper.Instance.WorldCupData.groups.f.matches);
+            AddMatches(gameTable, GameHelper.Instance.WorldCupData.groups.g.matches);
+            AddMatches(gameTable, GameHelper.Instance.WorldCupData.groups.h.matches);
+        }
+
+        private void AddMatches(List<Game> gameTable, List<Shared.Model.Match> matches)
+        {
+            var teams = GameHelper.Instance.WorldCupData.teams;
+            var stadiums = GameHelper.Instance.WorldCupData.stadiums;
+            foreach (var match in matches)
+            {
+                var team1 = teams.Where(t => t.id == match.home_team).Single();
+                var team2 = teams.Where(t => t.id == match.away_team).Single();
+                var stadium = stadiums.Where(s => s.id == match.stadium).Single();
+                gameTable.Add(new Game("GRP", match.date, teamsDictionary[team1.fifaCode], teamsDictionary[team2.fifaCode], stadium.name, stadium.city));
+            }
         }
 
         private static void LoadTeamPlayers(List<TeamPlayer> teamPlayers)
@@ -1251,7 +1217,7 @@ namespace Russia2018
             grdPlayerInfo.Visibility = Visibility.Collapsed;
         }
 
-        private void ResetPlayerPositions(Team xt1, Team xt2, Canvas xrootCanvas, List<Discoid> xdiscoids, double leftEndX, double rightEndX, double topEndY, double bottomEndY)
+        private void ResetPlayerPositions(SoccerTeam xt1, SoccerTeam xt2, Canvas xrootCanvas, List<Discoid> xdiscoids, double leftEndX, double rightEndX, double topEndY, double bottomEndY)
         {
             hasPendingGoalResolution = false;
 
@@ -1747,7 +1713,7 @@ namespace Russia2018
 
                 if (scoreControl.Time > totalTime)
                 {
-                    Team selectedTeam = currentGame.Team1;
+                    SoccerTeam selectedTeam = currentGame.Team1;
                     currentGame = GetNextGame(selectedTeamID, currentGame.Date);
 
                     LoadPlayerFaces();
@@ -1802,7 +1768,7 @@ namespace Russia2018
 
         #endregion
 
-        private List<GhostBall> GetGhostBalls(Team team, Ball ball, bool despair)
+        private List<GhostBall> GetGhostBalls(SoccerTeam team, Ball ball, bool despair)
         {
             List<GhostBall> ghostBalls = new List<GhostBall>();
 

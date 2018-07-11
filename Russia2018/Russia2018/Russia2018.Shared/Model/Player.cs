@@ -15,7 +15,7 @@ namespace Russia2018.Model
 
         #region constructor
 
-        public Player(Team team, int number) : base(20, 1.0, false)
+        public Player(SoccerTeam team, int number) : base(20, 1.0, false)
         {
             this.Id = number.ToString("00");
             this.Team = team;
@@ -28,7 +28,7 @@ namespace Russia2018.Model
 
         #region properties
 
-        public Team Team { get; set; }
+        public SoccerTeam Team { get; set; }
 
         public bool IsPlaying { get; set; }
 
