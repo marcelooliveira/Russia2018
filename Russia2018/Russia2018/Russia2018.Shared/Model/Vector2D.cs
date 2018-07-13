@@ -43,6 +43,8 @@ namespace Russia2018.Model
             get { return y; }
             set { y = value; }
         }
+
+        public static Vector2D Zero { get { return new Vector2D(0, 0); } }
         #endregion properties
 
         #region functions

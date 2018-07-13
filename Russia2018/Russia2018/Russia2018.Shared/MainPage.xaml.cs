@@ -1542,6 +1542,12 @@ namespace Russia2018
                                     {
                                         Player p = null;
                                         Ball b = null;
+                                        discoidA.HSpinVelocity =
+                                        discoidB.HSpinVelocity =
+                                        discoidA.VSpinVelocity =
+                                        discoidB.VSpinVelocity = 
+                                        discoidA.TranslateVelocity =
+                                        discoidB.TranslateVelocity = Vector2D.Zero;
                                         if (discoidA is Player)
                                         {
                                             p = (Player)discoidA;
@@ -1552,8 +1558,10 @@ namespace Russia2018
                                             p = (Player)discoidB;
                                             b = (Ball)discoidA;
                                         }
+                                        b.Y = p.Y;
+                                        b.X = p.X + p.Radius * 1.5;
 
-                                        turnEvents.Add(new PlayerToBallContact(currentGame.PlayingTeamID, p, new Point(ball.Position.X, ball.Position.Y)));
+                                        //turnEvents.Add(new PlayerToBallContact(currentGame.PlayingTeamID, p, new Point(ball.Position.X, ball.Position.Y)));
                                     }
                                     else if (discoidA is Player && discoidB is Player)
                                     {
