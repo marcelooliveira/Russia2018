@@ -296,14 +296,5 @@ namespace Russia2018
         }
     }
 
-    public class Teams
-    {
-        public static string Argentina = "Argentina";
-        public static string Brazil = "Brazil";
-        public static string France = "France";
-        public static string Germany = "Germany";
-        public static string Italy = "Italy";
-        public static string Portugal = "Portugal";
-        public static string Uruguay = "Uruguay";
-    }
+
 }

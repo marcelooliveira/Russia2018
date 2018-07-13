@@ -1429,7 +1429,6 @@ namespace Russia2018
 
             started = true;
 
-
             if (currentGame.Team1ID == currentGame.PlayingTeamID)
             {
                 ballStrength = currentGame.Team1BallStrength;
@@ -1461,16 +1460,6 @@ namespace Russia2018
 
             //xSound defines if the sound is coming from the left or the right
             double xSound = (double)(selectedPlayer.Position.X - 300.0f) / 300.0f;
-
-            //CreateSnapshot(GetBallPositionList());
-
-            //if (currentGameState != GameState.TestShot)
-            //{
-            //    PlayCue(GameSound.Shot01);
-            //}
-
-            //Calculates the ball positions as long as there are moving balls
-            //MoveBalls();
 
             fallenBallsProcessed = false;
         }
@@ -1546,7 +1535,6 @@ namespace Russia2018
 
                             if (discoidA != discoidB)
                             {
-                                //if (discoidA.Colliding(discoidB) && !discoidA.IsBallInGoal && !discoidB.IsBallInGoal)
                                 if (discoidA.Colliding(discoidB))
                                 {
                                     if ((discoidA is Player && discoidB is Ball) ||
