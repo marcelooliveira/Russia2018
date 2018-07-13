@@ -203,7 +203,7 @@
               </TransformGroup>
             </Border.RenderTransform>
           </Border>
-          <Border Margin="8,8,0,64" CornerRadius="8"  Width="75" Height="100">
+          <Border Margin="8,8,0,64" CornerRadius="8"  Width="100" Height="100">
             <!--<Border.Background>
                         <RadialGradientBrush>
                             <GradientStop Offset="0.0" Color="#00000000"/>
@@ -217,7 +217,7 @@
               </TransformGroup>
             </Border.RenderTransform>
           </Border>
-          <Border Margin="8,8,0,64" CornerRadius="8"  Width="75" Height="100">
+          <Border Margin="8,8,0,64" CornerRadius="8"  Width="100" Height="100">
             <Border.Background>
               <ImageBrush x:Name="imgPlayer"/>
             </Border.Background>
