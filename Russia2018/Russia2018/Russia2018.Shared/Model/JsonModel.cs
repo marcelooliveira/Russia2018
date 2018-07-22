@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Russia2018.Model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -33,6 +34,7 @@ namespace Russia2018.Shared.Model
         public string flag { get; set; }
         public string emoji { get; set; }
         public string emojiString { get; set; }
+        public List<TeamPlayer> teamPlayers { get; set; } = new List<TeamPlayer>();
     }
 
     public class Match

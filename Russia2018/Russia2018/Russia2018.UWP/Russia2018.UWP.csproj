@@ -108,6 +108,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\data.json" />
+    <Content Include="Assets\data - Cópia .json" />
     <None Include="Russia2018.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
