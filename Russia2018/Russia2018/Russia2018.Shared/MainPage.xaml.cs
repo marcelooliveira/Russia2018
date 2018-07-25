@@ -1055,12 +1055,6 @@ namespace Russia2018
         {
             currentGame.Fouls[currentGame.PlayingTeamID] = 0;
 
-            int redCount = 0;
-            int fallenRedCount = 0;
-            int wonPoints = 0;
-            int lostPoints = 0;
-            bool someInTable = false;
-
             //List<Discoid> players = from d in discoids.Where( e => e is Player).ToList();
 
             foreach (Ball ball in pottedBalls)
