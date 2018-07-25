@@ -19,14 +19,10 @@ namespace Russia2018
         double ballStrength = 50;
         int PlayersByTeam = 11;
         List<TurnEvent> turnEvents = new List<TurnEvent>();
-        bool fallenBallsProcessed = false;
-        PlayerState playerState = PlayerState.None;
-        PlayerState lastPlayerState = PlayerState.None;
         List<Discoid> strokenDiscoids = new List<Discoid>();
         static List<string> logList = new List<string>();
         GameState currentGameState = GameState.None;
         List<Ball> pottedBalls = new List<Ball>();
-        bool afterTurnProcessed = false;
         Random random = new Random(DateTime.Now.Millisecond);
         bool started = false;
         Game currentGame = null;
@@ -50,8 +46,6 @@ namespace Russia2018
         Point strengthPointNW = new Point(0, 0);
         Point strengthPointSE = new Point(0, 0);
 
-        bool calculatingPositions = true;
-        Grid scoreGrid = new Grid();
         ScoreControl scoreControl = new ScoreControl();
         List<Goal> goals = new List<Goal>();
         double lastTotalVelocity = 0;
@@ -67,7 +61,7 @@ namespace Russia2018
         DateTime totalTime = new DateTime(1, 1, 1, 0, 30, 0);
         SoccerTeam selectedTeam;
 
-        public MainPage() //: base(parameters)
+        public MainPage()
         {
             InitializeComponent();
         }
@@ -680,7 +674,6 @@ namespace Russia2018
             //xSound defines if the sound is coming from the left or the right
             double xSound = (double)(selectedPlayer.Position.X - 300.0f) / 300.0f;
 
-            fallenBallsProcessed = false;
         }
 
         private MoveResult MoveDiscoids()
@@ -692,7 +685,6 @@ namespace Russia2018
 
             //Flag indicating that the program is still calculating
             //the positions, that is, the balls are still in an inconsistent state.
-            calculatingPositions = true;
 
             foreach (Discoid discoid in discoids)
             {
@@ -912,8 +904,6 @@ namespace Russia2018
                 totalVelocity += discoid.TranslateVelocity.Y;
             }
 
-            calculatingPositions = false;
-
             bool isTurnOver = false;
             if (Math.Abs(totalVelocity) < 0.005 && Math.Abs(lastTotalVelocity) > 0)
             {
@@ -1063,7 +1053,6 @@ namespace Russia2018
 
         private void ProcessAfterTurn()
         {
-            afterTurnProcessed = true;
             currentGame.Fouls[currentGame.PlayingTeamID] = 0;
 
             int redCount = 0;
@@ -1253,106 +1242,6 @@ namespace Russia2018
                 Turnover(null);
             }
 
-            //if (!someInTable && currentGameState != GameState.TestShot)
-            //{
-            //    UpdateGameState(GameState.GameOver);
-            //    outgoingShot.GameOver = true;
-            //    return;
-            //}
-
-            //int fallenBallsCount = fallenBalls.Count;
-            //for (int i = fallenBallsCount - 1; i >= 0; i--)
-            //{
-            //    if (!fallenBalls[i].IsBallInPocket)
-            //    {
-            //        fallenBalls.RemoveAt(i);
-            //    }
-            //}
-
-            //teams[awaitingTeamID - 1].JustSwapped = true;
-            //teams[playingTeamID - 1].JustSwapped = swappedPlayers;
-
-            if (swappedPlayers)
-            {
-                playerState = PlayerState.Aiming;
-            }
-            else
-            {
-                playerState = PlayerState.Calling;
-                //if (playerState == PlayerState.Aiming)
-                //{
-                //    if (fallenRedCount < redCount)
-                //    {
-                //        if (teams[playingTeamID - 1].BallOn.Points == 1)
-                //        {
-                //            playerState = PlayerState.Calling;
-                //        }
-                //    }
-                //}
-            }
-
-            //if (currentGameState != GameState.TestShot)
-            //{
-            //    teams[playingTeamID - 1].BallOn = GetNextBallOn(swappedPlayers, teams[playingTeamID - 1].BallOn);
-
-            //    Texture2D ballOnTexture = null;
-            //    switch (teams[playingTeamID - 1].BallOn.Points)
-            //    {
-            //        case (int)BallValues.Red:
-            //            ballOnTexture = Content.Load<Texture2D>(@"Images\RedBall");
-            //            break;
-            //        case (int)BallValues.Yellow:
-            //            ballOnTexture = Content.Load<Texture2D>(@"Images\YellowBall");
-            //            break;
-            //        case (int)BallValues.Green:
-            //            ballOnTexture = Content.Load<Texture2D>(@"Images\GreenBall");
-            //            break;
-            //        case (int)BallValues.Brown:
-            //            ballOnTexture = Content.Load<Texture2D>(@"Images\BrownBall");
-            //            break;
-            //        case (int)BallValues.Blue:
-            //            ballOnTexture = Content.Load<Texture2D>(@"Images\BlueBall");
-            //            break;
-            //        case (int)BallValues.Pink:
-            //            ballOnTexture = Content.Load<Texture2D>(@"Images\PinkBall");
-            //            break;
-            //        case (int)BallValues.Black:
-            //            ballOnTexture = Content.Load<Texture2D>(@"Images\BlackBall");
-            //            break;
-            //    }
-
-            //    if (teams[playingTeamID - 1].Id == 1)
-            //        ballOn1.Texture = ballOnTexture;
-            //    else
-            //        ballOn2.Texture = ballOnTexture;
-            //}
-
-            //targetVector = new Vector2(0, 0);
-
-            if (currentGameState == GameState.Play)
-            {
-                //teams[playingTeamID - 1].Attempts =
-                //teams[awaitingTeamID - 1].Attempts = 0;
-
-                //teams[playingTeamID - 1].AttemptsToWin =
-                //teams[awaitingTeamID - 1].AttemptsToWin = 0;
-
-                //teams[playingTeamID - 1].AttemptsNotToLose =
-                //teams[awaitingTeamID - 1].AttemptsNotToLose = 0;
-
-                //teams[playingTeamID - 1].AttemptsOfDespair =
-                //teams[awaitingTeamID - 1].AttemptsOfDespair = 0;
-
-                //teams[playingTeamID - 1].BestShot.LostPoints =
-                //teams[awaitingTeamID - 1].BestShot.LostPoints = 1000;
-
-                //teams[playingTeamID - 1].BestShot.WonPoints =
-                //teams[awaitingTeamID - 1].BestShot.WonPoints = 0;
-
-                //teams[playingTeamID - 1].BestShotSelected =
-                //teams[awaitingTeamID - 1].BestShotSelected = false;
-            }
-
             strokenDiscoids.Clear();
             pottedBalls.Clear();
         }
@@ -1387,19 +1276,6 @@ namespace Russia2018
             brdStrength.Margin = new Thickness(8, y + imgBallStrength.ActualHeight / 2.0, 8, 8);
         }
 
-    }
-
-
-
-    public enum PlayerState
-    {
-        None,
-        SelectingNumberOfPlayers,
-        SelectingHost,
-        Connecting,
-        ReceivingInvitation,
-        Aiming,
-        Calling
     }
 
     public enum GameState

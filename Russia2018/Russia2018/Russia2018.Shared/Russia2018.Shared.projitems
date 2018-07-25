@@ -51,9 +51,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UserControlContainer.xaml.cs">
       <DependentUpon>UserControlContainer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)zzzUserControlContainer.xaml.cs">
-      <DependentUpon>zzzUserControlContainer.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
@@ -68,9 +65,5 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <None Include="$(MSBuildThisFileDirectory)zzzUserControlContainer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </None>
   </ItemGroup>
 </Project>
