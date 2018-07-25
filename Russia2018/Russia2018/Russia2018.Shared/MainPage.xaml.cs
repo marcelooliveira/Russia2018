@@ -1,18 +1,11 @@
-﻿using Newtonsoft.Json;
-using Russia2018.Model;
+﻿using Russia2018.Model;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
@@ -72,20 +65,20 @@ namespace Russia2018
         Storyboard sbStadiumScreen;
         List<Game> gameTable = new List<Game>();
         DateTime totalTime = new DateTime(1, 1, 1, 0, 30, 0);
-        string selectedTeamID;
+        SoccerTeam selectedTeam;
 
         public MainPage() //: base(parameters)
         {
             InitializeComponent();
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            selectedTeamID = e.Parameter as string;
+            selectedTeam = e.Parameter as SoccerTeam;
 
-            if (string.IsNullOrEmpty(selectedTeamID))
+            if (string.IsNullOrEmpty(selectedTeam.TeamID))
             {
                 return;
             }
@@ -105,15 +98,13 @@ namespace Russia2018
 
             teamsDictionary = GameHelper.Instance.TeamsDictionary;
 
-            //GameHelper.Instance.LoadTeamPlayers();
-
             LoadGameTable(gameTable);
 
             DateTime lastGameDate = new DateTime(2010, 06, 01);
 
             LoadBall();
 
-            currentGame = GetNextGame(selectedTeamID, lastGameDate);
+            currentGame = GetNextGame(selectedTeam.TeamID, lastGameDate);
 
             strengthPointNW = new Point
             (
@@ -951,7 +942,7 @@ namespace Russia2018
                 if (scoreControl.Time > totalTime)
                 {
                     SoccerTeam selectedTeam = currentGame.Team1;
-                    currentGame = GetNextGame(selectedTeamID, currentGame.Date);
+                    currentGame = GetNextGame(selectedTeam.TeamID, currentGame.Date);
 
                     LoadPlayerFaces();
                     ResetPlayerPositions(currentGame.Teams[currentGame.Team1ID], currentGame.Teams[currentGame.Team2ID], rootCanvas, discoids, goalPost00Point.X, goalPost10Point.X, rowTopEscapeArea.Height.Value, fieldHeight - rowTopEscapeArea.Height.Value);

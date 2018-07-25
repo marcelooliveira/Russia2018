@@ -204,13 +204,6 @@
             </Border.RenderTransform>
           </Border>
           <Border Margin="8,8,0,64" CornerRadius="8"  Width="100" Height="100">
-            <!--<Border.Background>
-                        <RadialGradientBrush>
-                            <GradientStop Offset="0.0" Color="#00000000"/>
-                            <GradientStop Offset="9.0" Color="#20000000"/>
-                            <GradientStop Offset="1.0" Color="#40000000"/>
-                        </RadialGradientBrush>
-                    </Border.Background>-->
             <Border.RenderTransform>
               <TransformGroup>
                 <TranslateTransform X="4" Y="4"/>
